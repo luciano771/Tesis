@@ -1,0 +1,66 @@
+
+main{
+    margin: 100px;
+    padding: 100px;
+    
+
+}
+section{
+    margin: 100px;
+    padding: 100px;
+    
+
+}
+
+
+nav {
+    background-color: rgb(61, 61, 61);
+        
+}
+
+.div-nav {
+    margin-left: 80px;
+    margin-right: 80px;
+    
+}
+
+
+
+
+.titulo {
+    text-align: center;
+
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.container_section {
+    background-color: rgb(61, 61, 61);
+
+}
+
+a {
+    color: black;
+    
+}
+
+.btn-primary {
+    background-color:yellowgreen;
+    border-color:yellowgreen;
+}
+
+   
+
+.container-foot {
+
+    background-color:darkslategray;
+    height: 70px;
+    
+
+
+}
+
