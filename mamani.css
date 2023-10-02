@@ -1,0 +1,165 @@
+
+main{
+    margin: 80px;
+    padding: 80px;
+    
+
+}
+body{
+    margin: 50px;
+    padding: 50px;
+    
+
+}
+
+.menuCSS3 ul {
+    display: flex;
+    padding: 10;
+    margin: 10;
+    list-style: none;
+}
+.menuCSS3 a {
+    display: block;
+    padding: 2em;
+    background-color: #F9B53C;
+    text-decoration: none;
+    color: #191C26;
+}
+.menuCSS3 a:hover {
+    background-color: #CC673B;
+}
+.menuCSS3 ul li ul {
+    display: none;
+}
+.menuCSS3 ul li a:hover + ul, .menuCSS3 ul li ul:hover {
+    display: block;
+}
+
+
+
+nav{
+    margin: 50px;
+    padding: 50px;
+    background-color: aqua;
+}
+
+
+
+.titulo {
+    text-align: center;
+
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.container_section {
+    background-color: rgb(61, 61, 61);
+
+}
+
+a {
+    color: black;
+    
+}
+
+.btn-primary {
+    background-color:yellowgreen;
+    border-color:yellowgreen;
+}
+
+   
+
+.container-foot {
+
+    background-color:darkslategray;
+    height: 70px;
+    
+
+
+}
+body{
+    background-color: aqua;
+}
+footer {
+    background-color: gray;
+    color: beige;
+}
+
+#footer-contenido {
+    width: 800px;
+    height: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.caja6{
+    background-color:black;
+    color: black;
+    width: 800px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border:solid 30px red 
+    
+}
+.caja4{
+    background-color:white;
+    color: black;
+    width: 800px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border:solid 30px rgb(190, 187, 187);
+    
+}
+.caja5{
+    background-color:rgb(88, 87, 87);
+    color: black;
+    width: 800px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border:solid 30px rgb(255, 245, 245);
+    
+}
+.caja3{
+    background-color:rgb(77, 17, 72);
+    color: black;
+    width: 800px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border:solid 30px rgb(255, 252, 252);
+    
+}
+.caja2{
+    background-color:rgb(6, 168, 60);
+    color: black;
+    width: 800px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border:solid 30px rgb(252, 249, 249);
+    
+}
+
+.caja7{
+    background-color:rgb(196, 13, 13);
+    color: black;
+    width: 800px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    border:solid 30px rgb(252, 249, 249);
+    
+}
+table img {
+    width: 400px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 20px black;
+  }
