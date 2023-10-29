@@ -1,0 +1,8 @@
+{
+    "require": {
+        "box/spout": "^3.3",
+        "cboden/ratchet": "^0.4.4",
+        "phpoffice/phpexcel": "^1.8",
+        "phpoffice/phpspreadsheet": "^1.29"
+    }
+}
