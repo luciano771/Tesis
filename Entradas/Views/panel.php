@@ -32,87 +32,68 @@
 ?>
     <header>
         <div class="cabecera">
-            <h1>Subir Nuevo Evento</h1>
+            <h1>Subir Nuevo Articulo</h1>
         </div>    
     </header>
      
+     
     <div class="principal">
-            <form   action="../Controllers/panelController.php" method="POST"  enctype="multipart/form-data">
-                <div class="contenedor" id="contenedor"> 
-                    <div class="mb-3">
-                        <label for="Titulo" class="form-label">Titulo:</label>
-                        <input type="text" class="form-control" id="Titulo" name="Titulo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Descripcion" class="form-label">Descripcion:</label>
-                        <input type="text" class="form-control" id="Descripcion" name="Descripcion" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Fecha_inicio" class="form-label">Fecha inicio:</label>
-                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="Fecha_inicio" id="Fecha_inicio" required/>
-                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
+        <form   action="../Controllers/panelController.php" method="POST"  enctype="multipart/form-data">
+                    <div class="contenedor" id="contenedor"> 
+                        <div class="mb-3">
+                            <label for="Titulo" class="form-label">Titulo:</label>
+                            <input type="text" class="form-control" id="Titulo" name="Titulo" required>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Fecha_fin" class="form-label">Fecha fin:</label>
-                            <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="Fecha_fin" id="Fecha_fin" required/>
-                                <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="file">Imagen:</label>
-                        <input type="hidden" id="img"></label>
-                        <input type="file" class="form-control-file" id="file" name="file">
-                    </div>
-                    <br>
-                    <label class="col-xs-2 control-label">Adjuntar Listado de actores:</label>
-                    <div class="col-xs-3">
-                    <input type="file" name="archivo" value="archivo" size="80" id="archivo" />
-                    <br>
-                    <a href="../Models/Modelo.xlsx">Descarge archivo de modelo</a>
-                    </div>
-                    <br>
-                    <input type="hidden" name="accion" id="accion" value="agregar">
-                    <input type="hidden" name="pk_eventos" id="pk_eventos" value="">
-                    <button type="submit" id ="boton" class="btn btn-primary">Cargar evento</button>
-                </div>
+                        <div class="mb-3">
+                            <label for="Descripcion" class="form-label">Descripcion:</label>
+                            <input type="text" class="form-control" id="Descripcion" name="Descripcion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Precio" class="form-label">Precio:</label>
+                            <input type="text" class="form-control" id="Precio" name="Precio" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Cantidad" class="form-label">Cantidad:</label>
+                            <input type="text" class="form-control" id="Cantidad" name="Cantidad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="file">Imagen:</label>
+                            <input type="hidden" id="img"></label>
+                            <input type="file" class="form-control-file" id="file" name="file">
+                        </div>           
+                        <input type="hidden" name="accion" id="accion" value="agregar">
+                        <input type="hidden" name="pk_eventos" id="pk_eventos" value="">
+                        <button type="submit" id ="boton" class="btn btn-primary">Cargar Articulo</button>
+                    </div>               
             </form>
+
             <div id="administrador"></div>
-            <br> 
+            <br>
             <div class="paginacion">
-                <button id="btnAnterior" class="btn btn-primary boton">Anterior</button>
-                <button id="btnSiguiente" class="btn btn-primary boton">Siguiente</button>
-                <a href="../Controllers/registro.log" download>Registros de reservas</a>
-            </div>       
+                    <button id="btnAnterior" class="btn btn-primary boton">Anterior</button>
+                    <button id="btnSiguiente" class="btn btn-primary boton">Siguiente</button>
+            </div>      
     </div>
 
 
  
         
+
+
+
+
+
+
+ 
+
+
+
         <script>
-
-
-            $(document).ready(function () {
-                $('#datetimepicker1').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss',
-                    locale: 'es'
-                });
-                $('#datetimepicker2').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss',
-                    locale: 'es'
-                });
-            });
-
             let Modificar = false;
-            const eventosPorPagina = 8; // Número de eventos por página
+            const eventosPorPagina = 5; // Número de eventos por página
             let paginaActual = 1;
             let eventos;
+ 
 
 // Función para mostrar eventos en la página actual
 async function mostrarEventosEnPagina() {
@@ -141,10 +122,9 @@ async function mostrarEventosEnPagina() {
       const divEvento = document.createElement('div');
       divEvento.className = 'eventoPanel';
         divEvento.innerHTML = `
-            <p>${evento.pk_eventos}: ${evento.titulo} 
-            <button class="btn btn-primary boton" accion="modificar" id="modificar" pkeventos="${evento.pk_eventos}">Modificar</button>
-            <button class="btn btn-primary boton" accion="eliminar" id="eliminar" pkeventos="${evento.pk_eventos}">Eliminar</button>
-            <a href="${nuevaURL}"><button class="btn btn-primary boton"  pkeventos="${evento.pk_eventos}">Ver reservas</button></a></p>
+            <p>${evento.pk_articulos}: ${evento.titulo} 
+            <button class="btn btn-primary boton" accion="modificar" id="modificar" pkeventos="${evento.pk_articulos}">Modificar</button>
+            <button class="btn btn-primary boton" accion="eliminar" id="eliminar" pkeventos="${evento.pk_articulos}">Eliminar</button>
             `;
         eventosContainer.appendChild(divEvento);
         const Btns = divEvento.querySelectorAll('.boton');
@@ -154,54 +134,38 @@ async function mostrarEventosEnPagina() {
                         const accion = this.getAttribute('accion');
                         console.log('pkeventos es:', pkEventos," y la accion es: ",accion);
                         //cargar popup del admin
-                        if(accion=='modificar'){
-                             bool = await filabool(pkEventos);
-                            console.log("filabool es igual a:"+bool);
-
-                                if(bool=="false"){
-                                
-                                    MandarGet(pkEventos, accion)
+                        if(accion=='modificar'){                            
+                                   MandarGet(pkEventos, accion)
                                     .then(data => {
                                         if(data.length>0){
                                             const evento = data[0];
                                             console.log("Respuesta JSON:", evento);
                                             document.getElementById('Titulo').value = evento.titulo;
                                             document.getElementById('Descripcion').value = evento.descripcion;
-                                            document.getElementById('Fecha_inicio').value = evento.fecha_inicio;
-                                            document.getElementById('Fecha_fin').value = evento.fecha_fin;
+                                            document.getElementById('Precio').value = evento.Precio;
+                                            document.getElementById('Cantidad').value = evento.cantidad;
                                             var titulo = evento.titulo;
                                             var descripcion = evento.descripcion;
-                                            var fecha_inicio = evento.fecha_inicio;
-                                            var fecha_fin = evento.fecha_fin;
+                                            var fecha_inicio = evento.precio;
+                                            var fecha_fin = evento.cantidad;
                                             var img = evento.img;
-                                            if(!Modificar){
-                                                agregarbtnVer(pkEventos);
-                                                //agregarbtnVerReservas(pkEventos);
-                                            }
+                                           
                                             Cargar_A_Actualizar(pkEventos);
                                             Modificar = true;
                                         }
                                     })
-
                                 .catch(error => {
                                     console.error("Error en la solicitud AJAX:", error);
-                                });
-                        }else{alert("Ya inicio la fila para este evento");  }
-                                                                                       
+                                });                                                                                                          
                         }else if(accion=='eliminar'){
-
-                            bool = await ReservasBool(pkEventos);
-                            if(bool=="false"){
-
-                            var boton = document.getElementById("boton").innerText = "Cargar Evento";
+                            var boton = document.getElementById("boton").innerText = "Cargar Articulo";
                             var accionpost = document.getElementById('accion').value = "agregar";
                             console.log(boton,accionpost);
                             Modificar = false;
-                            EliminarEvento(pkEventos);
-                            alert("Se elimino el evento: "+pkEventos);
+                            MandarGet(pkEventos,accion);
+                            alert("Se elimino el articulo: "+pkEventos);
                             location.reload();
-                            }
-                            else{alert("El evento posee reservas.");}
+                           
                         }
                           
              });
@@ -262,99 +226,13 @@ async function mostrarEventosEnPagina() {
                 });
             }
 
-            function MandarGetImg(pkEventos) {
-                const url = `../Controllers/panelController.php?VerImagen=true&pkEvento=${pkEventos}`;
-                return fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Error en la solicitud AJAX");
-                    }
-                    return response.json();
-                });
-            }
+           
  
-         
- 
-            function EliminarEvento(pkEvento) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "../Controllers/panelController.php", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            // La solicitud POST se ha completado con éxito
-                            // Puedes mostrar un mensaje o realizar otras acciones aquí
-                            console.log(xhr.responseText);
-                        } else {
-                            // Manejar errores aquí
-                            console.error("Error en la solicitud AJAX");
-                        }
-                    }
-                };
-                xhr.send("EliminarEvento=true&pkEvento=" + pkEvento);
-            }
 
   
 
-            function agregarbtnVer(pkeventos) {
-                
-                var miBoton = document.createElement("button");
-                miBoton.textContent = "Ver listado actual";
-                miBoton.type = "button";
-                miBoton.id="VerListado";
-                miBoton.className = "btn btn-primary boton";
-                miBoton.addEventListener("click", function () {
-                    console.log("Botón ver listado");
-                    var urlCompleta = window.location.href;
-                    // Separar la URL en partes (dominio y resto)
-                    var partesURL = urlCompleta.split('/');
-                    // Obtener la parte del dominio
-                    var dominio = partesURL.slice(0, 4).join('/'); // Esto captura "http://localhost/meraki/entradas con slice(0,5)"
-                    // Concatenar el resto de la URL que desees
-                    var restoDeLaURL = '/Controllers/panelController.php?Listado=true&pkEvento='+pkeventos;
-                    // Construir la nueva URL
-                    var nuevaURL = dominio + restoDeLaURL;
-                    // Imprimir la nueva URL en la consola (puedes usarla como desees)
-                    console.log(dominio);
-                    console.log(restoDeLaURL);
-                    console.log(nuevaURL);
-                    window.location.href = nuevaURL;
-                });
-
-                // Agregar el botón al contenedor
-                var contenedor = document.getElementById("contenedor");
-                contenedor.appendChild(miBoton);
-            }
-
-            function agregarbtnVerReservas(pkeventos) {
-                
-                var miBoton = document.createElement("button");
-                miBoton.textContent = "Reservas";
-                miBoton.type = "button";
-                miBoton.id="Reservas";
-                miBoton.className = "btn btn-primary boton";
-                miBoton.addEventListener("click", function () {
-                    console.log("Botón ver listado");
-                    var urlCompleta = window.location.href;
-                    // Separar la URL en partes (dominio y resto)
-                    var partesURL = urlCompleta.split('/');
-                    // Obtener la parte del dominio
-                    var dominio = partesURL.slice(0, 4).join('/'); // Esto captura "http://localhost/meraki/entradas con slice(0,5)"
-                    // Concatenar el resto de la URL que desees
-                    var restoDeLaURL = '/Controllers/panelController.php?ListadoReservas=true&pkEvento='+pkeventos;
-                    // Construir la nueva URL
-                    var nuevaURL = dominio + restoDeLaURL;
-                    // Imprimir la nueva URL en la consola (puedes usarla como desees)
-                    console.log(dominio);
-                    console.log(restoDeLaURL);
-                    console.log(nuevaURL);
-                    window.location.href = nuevaURL;
-                });
-
-                // Agregar el botón al contenedor
-                var contenedor = document.getElementById("contenedor");
-                contenedor.appendChild(miBoton);
-            }
+            
+            
 
             
 
@@ -370,36 +248,7 @@ async function mostrarEventosEnPagina() {
             }
 
             
-            function filabool(pkEventos) {
-                const url = `../Controllers/panelController.php?FilaBool=true&pkEvento=${pkEventos}`;
-                console.log('URL de la solicitud:', url);
-                return fetch(url)
-                    .then(response => response.text())
-                    .then(data => {
-                        return data.trim(); // Devolver directamente el resultado como un booleano
-                    })
-                    .catch(error => {
-                        console.error('Error al hacer la solicitud:', error);
-                        return false;
-                    });
-            }
-
             
-            function ReservasBool(pkEventos) {
-                const url = `../Controllers/panelController.php?ReservasBool=true&pkEvento=${pkEventos}`;
-                console.log('URL de la solicitud:', url);
-                return fetch(url)
-                    .then(response => response.text())
-                    .then(data => {
-                        return data.trim(); // Devolver directamente el resultado como un booleano
-                    })
-                    .catch(error => {
-                        console.error('Error al hacer la solicitud:', error);
-                        return false;
-                    });
-            }
-
-
 
 
 

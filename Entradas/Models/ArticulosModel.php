@@ -1,42 +1,68 @@
 <?php
 require_once 'Conexion.php'; 
 
-class EventosModel  
+class ArticulosModel  
 {   
-
-    private $Titulo;
-    private $Descripcion;
-    private $Fecha_inicio_Guardarbase;
-    private $Fecha_fin_Guardarbase;
-    private $url_base;
     private $db;
+    private $pk_articulos;
+    private $titulo;
+    private $descripcion;
+    private $Precio;
+    private $cantidad;
+ 
+    private $img;
 
     public function __construct($db) {
         $this->db = $db;
     }
-    public function setTitulo($Titulo)
-    {
-        $this->Titulo = $Titulo;
+    public function getPkArticulos() {
+        return $this->pk_articulos;
     }
 
-    public function setDescripcion($Descripcion)
-    {
-        $this->Descripcion = $Descripcion;
+    public function setPkArticulos($pk_articulos) {
+        $this->pk_articulos = $pk_articulos;
     }
 
-    public function setFechaInicio($Fecha_inicio)
-    {
-        $this->Fecha_inicio_Guardarbase = $Fecha_inicio;
+    public function getTitulo() {
+        return $this->titulo;
     }
 
-    public function setFechaFin($Fecha_fin)
-    {
-        $this->Fecha_fin_Guardarbase = $Fecha_fin;
+    public function setTitulo($titulo) {
+        $this->titulo = $titulo;
     }
 
-    public function setUrlBase($url_base)
-    {
-        $this->url_base = $url_base;
+    public function getDescripcion() {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion($descripcion) {
+        $this->descripcion = $descripcion;
+    }
+
+    public function getPrecio() {
+        return $this->Precio;
+    }
+
+    public function setPrecio($Precio) {
+        $this->Precio = $Precio;
+    }
+
+    public function getCantidad() {
+        return $this->cantidad;
+    }
+
+    public function setCantidad($cantidad) {
+        $this->cantidad = $cantidad;
+    }
+
+  
+
+    public function getImg() {
+        return $this->img;
+    }
+
+    public function setImg($img) {
+        $this->img = $img;
     }
 
  
@@ -44,10 +70,10 @@ class EventosModel
     public function insertarEvento()
     {
         try {
-            $sql = "INSERT INTO eventos (titulo, descripcion, fecha_inicio, fecha_fin, img) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO articulos (titulo, descripcion, Precio, cantidad,img) VALUES (?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([$this->Titulo, $this->Descripcion, $this->Fecha_inicio_Guardarbase, $this->Fecha_fin_Guardarbase, $this->url_base]);
-            echo "ARCHIVO insertado";
+            $stmt->execute([$this->titulo, $this->descripcion, $this->Precio, $this->cantidad, $this->img]);
+            echo "articulos insertados";
         } catch (PDOException $e) {
             echo "Error al insertar el evento: " . $e->getMessage();
         }
@@ -58,7 +84,7 @@ class EventosModel
     public function ObtenerEventos(){
 
         try{
-        $consulta = "SELECT * FROM eventos";
+        $consulta = "SELECT * FROM articulos";
         $stmt = $this->db->query($consulta);
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         header('Content-Type: application/json');
@@ -71,7 +97,7 @@ class EventosModel
     public function ObtenerEventosPorId($pkevento){
 
         try{
-        $consulta = "SELECT * FROM eventos where pk_eventos= :pkevento";
+        $consulta = "SELECT * FROM articulos where pk_articulos= :pkevento";
         $stmt = $this->db->prepare($consulta);
         $stmt->bindParam(':pkevento', $pkevento, PDO::PARAM_INT); 
         $stmt->execute();
@@ -100,36 +126,36 @@ class EventosModel
 
     public function ActualizarEvento($pkevento){
         try {
-            $consulta =  "UPDATE eventos 
+            $consulta =  "UPDATE articulos 
             SET 
                 titulo = :titulo, 
                 descripcion = :descripcion, 
-                fecha_inicio = :fecha_inicio, 
-                fecha_fin = :fecha_fin";
+                Precio = :precio, 
+                cantidad = :cantidad";
     
             // Verificar si img no es null antes de incluirlo en la consulta
-            if ($this->url_base !== null) {
+            if ($this->img !== null) {
                 $consulta .= ", img = :img";
             }
     
-            $consulta .= " WHERE pk_eventos = :pkevento";
+            $consulta .= " WHERE pk_articulos = :pkevento";
     
             $stmt = $this->db->prepare($consulta);
             $stmt->bindParam(':pkevento', $pkevento, PDO::PARAM_INT); 
-            $stmt->bindParam(':titulo', $this->Titulo, PDO::PARAM_STR);
-            $stmt->bindParam(':descripcion', $this->Descripcion, PDO::PARAM_STR);
-            $stmt->bindParam(':fecha_inicio', $this->Fecha_inicio_Guardarbase, PDO::PARAM_STR);
-            $stmt->bindParam(':fecha_fin', $this->Fecha_fin_Guardarbase, PDO::PARAM_STR);
+            $stmt->bindParam(':titulo', $this->titulo, PDO::PARAM_STR);
+            $stmt->bindParam(':descripcion', $this->descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(':precio', $this->Precio, PDO::PARAM_STR);
+            $stmt->bindParam(':cantidad', $this->cantidad, PDO::PARAM_STR);
     
             // Verificar si img no es null antes de ejecutar la consulta
-            if ($this->url_base !== null) {
-                $stmt->bindParam(':img', $this->url_base, PDO::PARAM_STR);
+            if ($this->img !== null) {
+                $stmt->bindParam(':img', $this->img, PDO::PARAM_STR);
             }
     
             if ($stmt->execute()) {
-                echo "Evento actualizado correctamente";
+                echo "articulo actualizado correctamente";
             } else {
-                echo "Error al actualizar el evento: " . $stmt->errorInfo()[2];
+                echo "Error al actualizar el articulo: " . $stmt->errorInfo()[2];
             }
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -141,7 +167,7 @@ class EventosModel
         $bool = true;
 
         try {
-            $consulta = "SELECT img FROM eventos WHERE pk_eventos= :pkevento";
+            $consulta = "SELECT img FROM articulos WHERE pk_articulos= :pkevento";
             $stmt = $this->db->prepare($consulta);
             $stmt->bindParam(':pkevento', $pkeventos, PDO::PARAM_INT); 
             $stmt->execute();
@@ -165,7 +191,7 @@ class EventosModel
 
 
         try {
-            $consulta = "DELETE FROM eventos where pk_eventos= :pkevento";
+            $consulta = "DELETE FROM articulos where pk_articulos= :pkevento";
             $stmt = $this->db->prepare($consulta);
             $stmt->bindParam(':pkevento', $pkeventos, PDO::PARAM_INT); 
             $stmt->execute();

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Estilos/carrito.css">
+</head>
+<body>
+<h1>Compra de comida online</h1>
+
+<!-- Tabla - Productos del Carrito -->
+<div class="tabla-calculo" id="tabla-calculo">
+  <table class="tabla">
+    <caption class="titulo-tabla">Productos en el carrito</caption>
+    <thead class="cabecera border-top-right">
+      <tr>
+        <th class="border-top-left">Nombre Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th class="border-top-right">Precio Total</th>
+      </tr>
+    </thead>
+    <tbody id="carrito-body">
+
+    </tbody>
+    <tfoot id="footer">
+      <tr><td class="border-bottom-left border-bottom-right" colspan = 4>¡No hay ningun elemento en el carrito!</td></tr>
+    </tfoot>
+  </table>
+</div>
+<!-- Template de las filas -->
+<template id="agregar-producto-al-carro">
+  <tr>
+        <td id="producto">Papas Fritas</td>
+        <td><button id="menos-cantidad" class="button">-</button><span id="cant">1</span><button id='mas-cantidad' class="button">+</button></td>
+        <td class="precio-tabla" id="precio-uni">3.50</td>
+        <td class="precio-tabla" id="precio-total-prod">3.50</td>
+      </tr>
+</template>
+<!-- Template del footer de la tabla -->
+<template id="tfooter">
+  <tr class="none">
+    <td colspan = 2 class="border-bottom-left">
+      <button id="vaciar-tabla" class="button">Vaciar carrito</button>
+      <button id="Comprar" class="button">Finalizar Compra</button>
+    </td>
+    
+
+    <td class="negrita">Precio Total</td>
+    <td id="total-a-pagar" class="precio-tabla border-bottom-right negrita">5.00</td>
+  </tr>
+</template>
+
+<!-- Aqui se insertan las cards de productos con javascript-->
+<div class="contenedor-productos">
+  
+</div>
+
+<!-- template del producto -->
+<template id="template-prod">
+  <article class="cartola">
+   <!-- Imagen del producto -->
+   <div class="contenedor-img">
+    <img src="" alt="">
+   </div>
+   <!-- Nombre y descripción del producto -->
+   <div class="div-info">
+     <h2 class="nombre-prod">Nombre Producto</h2>
+     <hr class="separador">
+     <p class="descripcion-prod">Descripción producto</p>
+   </div>
+   <!-- Precio y Agregar al carrito -->
+   <div class="div-precio-boton">
+      <p class="precio">precio Producto</p>
+      <button class="boton">Agregar</button>
+   </div>
+  </article>
+  <input type="hidden" name="pk_eventos" id="pk_articulo" value="">
+ 
+</template>
+
+<script>
+
+
+ 
+
+
+
+//agregamos los productos al dom
+const templateProd = document.getElementById('template-prod').content
+const contenedorProd = document.querySelector('.contenedor-productos')
+const fragment = document.createDocumentFragment()
+let productos = {};
+fetch('../Controllers/ArticulosController.php?consultarArticulos=true')
+            .then(response => response.json())
+            .then(data => {
+                productos = Object.values(data);
+                console.log(productos)
+
+              
+                // TODO LO RELACIONADO A AGREGAR LOS PRODUCTOS AL DOM
+                Object.values(productos).forEach( producto => {
+                  templateProd.querySelector('.div-info .nombre-prod').textContent = producto.titulo
+                  templateProd.querySelector('.div-precio-boton .precio').textContent = producto.Precio
+                  templateProd.querySelector('.div-info .descripcion-prod').textContent = producto.descripcion
+                  templateProd.querySelector('.contenedor-img img').setAttribute('alt', producto.titulo)
+                  templateProd.querySelector('.contenedor-img img').setAttribute('src', producto.img)
+                  templateProd.querySelector('#pk_articulo').value =  producto.pk_articulos
+                  const clone = templateProd.cloneNode(true)
+                  fragment.appendChild(clone)
+                })
+                contenedorProd.appendChild(fragment)
+
+            })
+            .catch(error => {
+                console.error('Error al obtener los datos de eventos:', error);
+            });
+ 
+
+
+// TODO LO RELACIONADO AL CARRITO DE COMPRA
+let carrito = {}
+const templateTabla = document.getElementById('agregar-producto-al-carro').content
+const tbodyCarrito = document.getElementById('carrito-body')
+const fragmentTabla = document.createDocumentFragment()
+const templateFoot = document.getElementById('tfooter').content
+const tfootCarrito = document.getElementById('footer')
+
+contenedorProd.addEventListener('click', e => {
+  
+//   if(){
+//     window.location.href = "login.html";
+//   }
+
+  if(e.target.textContent === "Agregar") {
+    setCarrito(e.target.parentElement.parentElement)
+  }
+  e.stopPropagation();
+})
+const setCarrito = e => {
+  const pivoteCarrito = {
+    nombre: e.querySelector('.div-info .nombre-prod').textContent,
+    precio: e.querySelector('.div-precio-boton .precio').textContent,
+    cantidad: 1
+  }
+  if(carrito.hasOwnProperty(pivoteCarrito.nombre)){
+    carrito[pivoteCarrito.nombre].cantidad += 1
+  } else {
+    carrito[pivoteCarrito.nombre] = {...pivoteCarrito}
+  }
+  pintarTabla(carrito)
+}
+
+const pintarTabla = objetoCarrito => {
+  Object.values(objetoCarrito).forEach( objeto => {
+    const cloneTabla = templateTabla.cloneNode(true)
+    cloneTabla.getElementById('producto').textContent = objeto.nombre
+    cloneTabla.getElementById('cant').textContent = objeto.cantidad
+    cloneTabla.getElementById('precio-uni').textContent = objeto.precio
+    let precioTotal = parseFloat(objeto.precio) * objeto.cantidad
+    cloneTabla.getElementById('precio-total-prod').textContent = precioTotal.toFixed(2)
+    fragmentTabla.appendChild(cloneTabla)
+  })
+  tbodyCarrito.innerHTML = ''
+  tbodyCarrito.appendChild(fragmentTabla)
+  pintarFooter()
+}
+const pintarFooter = () => {
+  tfootCarrito.innerHTML = ''
+  if(Object.keys(carrito).length === 0) {
+    tfootCarrito.innerHTML = '<tr><td colspan = 4>¡No hay ningun elemento en el carrito!</td></tr>'
+  } else {
+    const total = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + (cantidad * precio),0)
+    templateFoot.getElementById('total-a-pagar').textContent = total.toFixed(2)
+    const cloneFoot = templateFoot.cloneNode(true)
+    fragment.appendChild(cloneFoot)
+    tfootCarrito.appendChild(fragment)
+    //Boton Vaciar carrito
+    const botonVaciar = document.getElementById('vaciar-tabla')
+    botonVaciar.addEventListener('click', () => {
+      carrito = {}
+      pintarTabla(carrito)
+      pintarFooter()
+    })
+
+    const botonComprar = document.getElementById('Comprar')
+    botonVaciar.addEventListener('click', () => {
+      //generar pedido y mandar datos a la base, mandar el mail al admin
+    })
+    
+    //Botones aumentar y disminuir cantidades
+    
+  }
+}
+tbodyCarrito.addEventListener('click', e => {
+  
+  if(e.target.classList.contains('button')) {
+    aumentarDisminuir(e.target)
+  }
+})
+const aumentarDisminuir = boton => {
+  if(boton.textContent === '+'){
+    const indicador = boton.parentElement.parentElement.firstElementChild.textContent
+    Object.values(carrito).forEach( elemento => {
+      if(elemento.nombre === indicador) {
+      carrito[elemento.nombre].cantidad++  
+      }
+    })
+  }
+  if(boton.textContent === '-') {
+    const indicador = boton.parentElement.parentElement.firstElementChild.textContent
+    Object.values(carrito).forEach( elemento => {
+      if(elemento.nombre === indicador) {
+      carrito[elemento.nombre].cantidad--
+        if(carrito[elemento.nombre].cantidad === 0) {
+          delete carrito[elemento.nombre]
+        }
+      }
+    })
+  }
+  pintarTabla(carrito)
+  pintarFooter()
+}
+
+
+</script>
+</body>
+</html>

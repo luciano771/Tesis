@@ -1,5 +1,6 @@
 <?php
-
-header('Location: Views/Eventos.html');
-
+session_start();
+$_SESSION['usuario'] = '';
+header('Location:  Views/Articulos.html');
+ 
 ?>

@@ -3,9 +3,9 @@
 class conexion extends PDO
 {
     private $hostBd = '154.56.48.154'; 
-    private $nombreBd = 'u955829785_eventos';
-    private $usuarioBd = 'u955829785_root';
-    private $passwordBd = 'LUCIAno4226';
+    private $nombreBd = 'u955829785_peumayen';
+    private $usuarioBd = 'u955829785_peumayen';
+    private $passwordBd = 'PEUMAYENequipo4226@';
 
     public function __construct()
     {

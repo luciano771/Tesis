@@ -9,11 +9,10 @@ header .cabecera{
     justify-content: center;
     padding: 10px;
 }
-
-.principal{
+.principal {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap:10px;
+    gap: 10px;
     padding: 20px;
     align-items: center;
     justify-content: center;
