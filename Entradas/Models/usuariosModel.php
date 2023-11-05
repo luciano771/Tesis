@@ -56,9 +56,11 @@ class usuariosModel {
             echo json_encode($resultados);
 
         } catch (PDOException $e) {
+
+            
             echo 'Error: ' . $e->getMessage();
         }
-    
+     
     }
 
 
