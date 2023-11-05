@@ -1,6 +1,6 @@
 <?php
 require_once 'Conexion.php';
-require_once 'ActoresModel.php';
+// require_once 'ActoresModel.php';
  
 
 class CompradoresModel {
