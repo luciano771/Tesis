@@ -4,15 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+ 
     <link rel="stylesheet" href="Estilos/carrito.css">
-</head>
+ </head>
 <body>
-<h1>Compra de comida online</h1>
+  <header>
+    <h1>Peumayen</h1>
+    <!-- <button id="mostrarModalBtn">Carrito</button> -->
+    <div id="miModal" class="modal">
+        <div class="modal-contenido">
+            <span id="cerrarModal" class="cerrar">&times;</span>
+            <!--inicio-->
 
+              
+            <div class="form-container" id="survey-form" >
+                  <label id="name-label" for="name" class="credential-inputs bold-text">Nombre
+                    <input type="text" id="name" class="text-box" name="name" placeholder="Ingrese un nombre y un apellido" required />
+                  </label>
+                  <label id="email-label" for="email" class="credential-inputs bold-text">Correo Electrónico
+                    <input type="email" id="email" class="text-box" name="email" placeholder="Ingrese su dirección de correo electrónico" required />
+                  </label>
+ 
+
+                <button type="submit" id="botonFinalizar" class="submit-btn">Finalizar</button>
+              </div>
+             
+            <!--fin-->
+        </div>
+    </div>
+</header>
 <!-- Tabla - Productos del Carrito -->
 <div class="tabla-calculo" id="tabla-calculo">
   <table class="tabla">
-    <caption class="titulo-tabla">Productos en el carrito</caption>
+    <caption><br></caption>
+    <!-- <caption class="titulo-tabla">Productos en el carrito</caption> -->
     <thead class="cabecera border-top-right">
       <tr>
         <th class="border-top-left">Nombre Producto</th>
@@ -66,18 +91,17 @@
    </div>
    <!-- Nombre y descripción del producto -->
    <div class="div-info">
+    <input type="hidden" name="pk_eventos" id="pk_articulo" value="">
      <h2 class="nombre-prod">Nombre Producto</h2>
      <hr class="separador">
      <p class="descripcion-prod">Descripción producto</p>
    </div>
    <!-- Precio y Agregar al carrito -->
    <div class="div-precio-boton">
-      <p class="precio">precio Producto</p>
+      <p class="precio">Precio producto</p>
       <button class="boton">Agregar</button>
    </div>
   </article>
-  <input type="hidden" name="pk_eventos" id="pk_articulo" value="">
- 
 </template>
 
 <script>
@@ -92,32 +116,41 @@ const templateProd = document.getElementById('template-prod').content
 const contenedorProd = document.querySelector('.contenedor-productos')
 const fragment = document.createDocumentFragment()
 let productos = {};
-fetch('../Controllers/ArticulosController.php?consultarArticulos=true')
-            .then(response => response.json())
-            .then(data => {
-                productos = Object.values(data);
-                console.log(productos)
-
-              
-                // TODO LO RELACIONADO A AGREGAR LOS PRODUCTOS AL DOM
-                Object.values(productos).forEach( producto => {
-                  templateProd.querySelector('.div-info .nombre-prod').textContent = producto.titulo
-                  templateProd.querySelector('.div-precio-boton .precio').textContent = producto.Precio
-                  templateProd.querySelector('.div-info .descripcion-prod').textContent = producto.descripcion
-                  templateProd.querySelector('.contenedor-img img').setAttribute('alt', producto.titulo)
-                  templateProd.querySelector('.contenedor-img img').setAttribute('src', producto.img)
-                  templateProd.querySelector('#pk_articulo').value =  producto.pk_articulos
-                  const clone = templateProd.cloneNode(true)
-                  fragment.appendChild(clone)
-                })
-                contenedorProd.appendChild(fragment)
-
-            })
-            .catch(error => {
-                console.error('Error al obtener los datos de eventos:', error);
-            });
  
 
+// Código para cargar datos desde la API
+fetch('../Controllers/ArticulosController.php?consultarArticulos=true')
+  .then(response => response.json())
+  .then(data => {
+    productos = Object.values(data);
+    console.log(productos);
+
+    // Llamar a la función para agregar productos al DOM después de cargar los datos
+    agregarProductosAlDOM();
+  })
+  .catch(error => {
+    console.error('Error al obtener los datos de eventos:', error);
+  });
+
+function agregarProductosAlDOM() {
+  // TODO LO RELACIONADO A AGREGAR LOS PRODUCTOS AL DOM
+  Object.values(productos).forEach(producto => {
+    templateProd.querySelector('.div-info .nombre-prod ').textContent = producto.titulo;
+    templateProd.querySelector('.div-precio-boton .precio').textContent = producto.Precio;
+    templateProd.querySelector('.div-info .descripcion-prod').textContent = producto.descripcion;
+    templateProd.querySelector('.contenedor-img img').setAttribute('alt', producto.titulo);
+    templateProd.querySelector('.contenedor-img img').setAttribute('src', producto.img);
+    templateProd.querySelector('#pk_articulo').value = producto.pk_articulos;
+    const clone = templateProd.cloneNode(true);
+    fragment.appendChild(clone);
+  });
+  contenedorProd.appendChild(fragment);
+}
+
+
+
+
+//aca finaliza mostrar items en el dom
 
 // TODO LO RELACIONADO AL CARRITO DE COMPRA
 let carrito = {}
@@ -140,10 +173,19 @@ contenedorProd.addEventListener('click', e => {
 })
 const setCarrito = e => {
   const pivoteCarrito = {
+    pk_articulo: e.querySelector('.div-info  #pk_articulo').value,
     nombre: e.querySelector('.div-info .nombre-prod').textContent,
     precio: e.querySelector('.div-precio-boton .precio').textContent,
     cantidad: 1
   }
+ 
+ 
+ 
+
+ console.log(carrito)
+ 
+ 
+
   if(carrito.hasOwnProperty(pivoteCarrito.nombre)){
     carrito[pivoteCarrito.nombre].cantidad += 1
   } else {
@@ -151,7 +193,7 @@ const setCarrito = e => {
   }
   pintarTabla(carrito)
 }
-
+ 
 const pintarTabla = objetoCarrito => {
   Object.values(objetoCarrito).forEach( objeto => {
     const cloneTabla = templateTabla.cloneNode(true)
@@ -185,9 +227,11 @@ const pintarFooter = () => {
     })
 
     const botonComprar = document.getElementById('Comprar')
-    botonVaciar.addEventListener('click', () => {
-      //generar pedido y mandar datos a la base, mandar el mail al admin
+    botonComprar.addEventListener('click', () => {
+      miModal.style.display = "block";
     })
+    
+    
     
     //Botones aumentar y disminuir cantidades
     
@@ -222,6 +266,92 @@ const aumentarDisminuir = boton => {
   pintarTabla(carrito)
   pintarFooter()
 }
+
+const botonFinalizar = document.getElementById('botonFinalizar')
+    botonFinalizar.addEventListener('click', () => {
+
+      finalizarCompra(carrito);
+      miModal.style.display = "none";
+    })
+
+  
+  
+  
+  
+  
+  
+  
+  function finalizarCompra(carrito) {
+  // Construir un objeto con los datos del carrito
+  const datosCompra = {
+    carrito: [],
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value
+  };
+
+  // Llenar el array "carrito" en el objeto con los datos de cada producto
+  for (const productoNombre in carrito) {
+    if (carrito.hasOwnProperty(productoNombre)) {
+      const producto = carrito[productoNombre];
+      datosCompra.carrito.push({
+        pk_articulo: producto.pk_articulo,
+        //nombre: producto.nombre,
+        precio: producto.precio,
+        cantidad: producto.cantidad
+      });
+    }
+  }
+
+  // Realizar una solicitud POST utilizando fetch
+  fetch('http://localhost/Tesis/Tesis/Entradas/Controllers/ArticulosController.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datosCompra)
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Manejar la respuesta del servidor si es necesario
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error al enviar la solicitud POST', error);
+    });
+}
+
+
+
+
+
+
+
+/*modal*/
+
+
+
+const mostrarModalBtn = document.getElementById("mostrarModalBtn");
+const miModal = document.getElementById("miModal");
+const cerrarModal = document.getElementById("cerrarModal");
+
+mostrarModalBtn.addEventListener("click", function () {
+    miModal.style.display = "block";
+});
+
+cerrarModal.addEventListener("click", function () {
+    miModal.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+    if (event.target === miModal) {
+        miModal.style.display = "none";
+    }
+});
+
+
+ 
+ 
+
 
 
 </script>

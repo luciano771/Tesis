@@ -9,7 +9,7 @@ include '../Models/CompradoresModel.php';
 
 $db = new conexion();
 $instancia = new ArticulosModel($db);
-$instancia3 = new CompradoresModel($db);
+ 
 
 
 
@@ -150,7 +150,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST["EliminarEvento"]) && $_POST["EliminarEvento"]=="true" && isset($_POST["pkEvento"])){
         $instancia2->BorrarListado($_POST["pkEvento"]);
-        $instancia3->BorrarCompradores($_POST["pkEvento"]);
+        //$instancia3->BorrarCompradores($_POST["pkEvento"]);
         $instancia->BorrarEvento($_POST["pkEvento"]);
         $response = array('message' => 'Evento eliminado con éxito');
         header('Content-Type: application/json');
@@ -245,7 +245,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 unset($db);
 unset($instancia);
 unset($instancia2);
-unset($instancia3);
+ 
 
 
    

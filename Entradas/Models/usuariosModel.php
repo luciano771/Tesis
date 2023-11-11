@@ -3,8 +3,8 @@ require_once 'Conexion.php';
 class usuariosModel {
     private $db;
     private $email;
-    private $contrasena;
-    private $celular;
+    private $nombre;
+     
     public function __construct($db) {
         $this->db = $db;
     }
@@ -17,30 +17,24 @@ class usuariosModel {
         $this->email = $email;
     }
 
-    public function getContrasena() {
-        return $this->contrasena;
+    public function getNombre() {
+        return $this->nombre;
     }
 
-    public function setContrasena($contrasena) {
-        $this->contrasena = $contrasena;
+    public function setNombre($nombre) {
+        $this->nombre = $nombre;
     }
 
-    public function getcelular() {
-        return $this->celular;
-    }
-
-    public function setcelular($celular) {
-        $this->celular = $celular;
-    }
+    
  
 
     public function InsertarUsuario()
     {
         try {
-            $sql = "INSERT INTO usuarios (email, contrasena, celular) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO usuarios (email, nombreapellido) VALUES (?, ?)";
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([$this->email, $this->contrasena, $this->celular]);
-            echo "articulos insertados";
+            $stmt->execute([$this->email, $this->nombre]);
+            echo "usuario insertados";
         } catch (PDOException $e) {
             echo "Error al insertar el evento: " . $e->getMessage();
         }

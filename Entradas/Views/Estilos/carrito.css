@@ -4,7 +4,7 @@ body {
     font-family: Optima, sans-serif;
     --border: 1px solid hsla(240, 25% ,50% , 0.3);
     --border-table: 1px solid hsla(240, 25% ,50% , 01);
-    background: hsl(240, 40%, 84%);
+    background-color: aquamarine;
   }
   h1 {
     text-align: center;
@@ -95,7 +95,6 @@ body {
   }
   /* Imagen */
   .contenedor-img {
-    border-radius-top-left: .35rem;
     height: 127px;
     overflow: hidden;
   }
@@ -125,7 +124,7 @@ body {
     font-size: 0.9rem;
     padding: 0.2rem 1rem;
     overflow: hidden;
-    opacity: .7;
+    
   }
   /* Precio y Boton Carrito */
   .div-precio-boton {
@@ -187,4 +186,126 @@ body {
     text-align: center;
   }
   
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos para el encabezado (header) */
+header {
+  display: flex;
+  justify-content: space-between; /* Coloca elementos al extremo izquierdo y derecho */
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  position: relative; /* Agregado para posicionar el modal relativo a este elemento */
+}
+
+h1 {
+  margin: 0;
+  flex: 1; /* Para centrar el título en el espacio disponible */
+  text-align: center; /* Alinea el texto al centro */
+}
+
+/* Estilos para el botón */
+header button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+
+  /*modal*/
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000; /* Asegura que el modal esté en la capa superior */
+  }
   
+
+/* Estilos para el modal-contenido */
+.modal-contenido {
+  background-color: #fff;
+  margin: 20% auto;
+  padding: 20px;
+  width: 60%;
+  text-align: center;
+  color: #000; /* Establece un color de texto legible */
+}
+
+
+.cerrar {
+  float: right;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+
+
+
+
+ /* Estilos generales del formulario */
+ .form-container {
+ 
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  text-align: center; /* Añadimos alineación centrada al formulario */
+}
+
+/* Estilos para las etiquetas de nombre y correo electrónico */
+.credential-inputs {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el texto en negrita en las etiquetas */
+.bold-text {
+  font-weight: bold;
+}
+
+/* Estilos para los campos de entrada de texto */
+.text-box {
+  width: 50%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilos para el botón de envío */
+.submit-btn {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block; /* Hacemos que el botón sea un bloque en línea para centrarlo */
+}
+
+/* Cambiar el color del botón cuando se pasa el mouse por encima */
+.submit-btn:hover {
+  background-color: #0056b3;
+}

@@ -94,6 +94,21 @@ class ArticulosModel
         }
     }   
 
+    public function FinalizarCompra(){
+
+        try{
+        $consulta = "SELECT * FROM articulos";
+        $stmt = $this->db->query($consulta);
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        header('Content-Type: application/json');
+        echo json_encode($resultados);
+        } catch (PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+        }
+    }   
+
+
+
     public function ObtenerEventosPorId($pkevento){
 
         try{
