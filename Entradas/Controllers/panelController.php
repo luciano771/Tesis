@@ -113,7 +113,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $instancia2->campaña($titulo,$mensaje);
  
         }
-            
+        
+        $respuesta = ['mensaje' => $mensaje];
+        echo json_encode($respuesta);
 
     }else{
         $respuesta = ['mensaje' => 'Accion no valida'];
