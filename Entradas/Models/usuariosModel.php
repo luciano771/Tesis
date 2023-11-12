@@ -67,12 +67,10 @@ class usuariosModel {
         }
      
     }
-    public function campaña(){
+    public function campaña($titulo,$mensaje){
         $emails = $this->ConsultarUsuarioMails();
         foreach ($emails as $email){
             $para      =  $email['email'];
-            $titulo    = 'El título';
-            $mensaje   = 'Hola';
             $cabeceras = 'From: Equipo7TesisEsba@example.com' . "\r\n" .
                 'Reply-To: pereyraluciano771@gmail.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
