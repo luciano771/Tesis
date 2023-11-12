@@ -21,24 +21,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
  
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener el contenido JSON de la solicitud
+ 
     $json_data = file_get_contents('php://input');
 
-    // Decodificar el JSON en un array asociativo
+ 
     $data = json_decode($json_data, true);
 
-    // Verificar si se han recibido datos
+    
     if ($data) {
-        // Acceder a los datos
+    
         $name = isset($data['name']) ? $data['name'] : null;
         $email = isset($data['email']) ? $data['email'] : null;
 
         $carrito = isset($data['carrito']) ? $data['carrito'] : array();
 
-        // Realizar las operaciones necesarias con los datos
-        // Por ejemplo, puedes insertar los datos en una base de datos aquí
-
-        // Devolver una respuesta al cliente en formato JSON
+        
         $respuesta = array(
             'mensaje' => 'Datos recibidos correctamente',
             'name' => $name,
@@ -63,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
         }
- 
         echo json_encode($respuesta);
     } else {
         echo json_encode(array('mensaje' => 'Error al recibir datos'));

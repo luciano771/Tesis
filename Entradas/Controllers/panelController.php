@@ -44,11 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         $respuesta = ['mensaje' => 'Articulos agregados con exito'];
         echo json_encode($respuesta);
-    } else {
-        // En caso de que la acción no sea "agregar"
-        $respuesta = ['mensaje' => 'Accion no valida'];
-        echo json_encode($respuesta);
-    }
+    }  
 
 
 
@@ -94,11 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         $respuesta = ['mensaje' => 'Articulos actualizada con exito'];
         echo json_encode($respuesta);
-    } else {
-        // En caso de que la acción no sea "agregar"
-        $respuesta = ['mensaje' => 'Accion no valida'];
-        echo json_encode($respuesta);
-    }
+    }  
     
 
     if (isset($data['accion']) && $data['accion'] == 'ofertas'){
@@ -115,14 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $respuesta = ['mensaje' => $mensaje, 'titulo'=>$titulo];
         echo json_encode($respuesta);
 
-    }else{
-        $respuesta = ['mensaje' => 'Accion no valida'];
-        echo json_encode($respuesta);
-    }
-
-
-
-
+    } 
 }
 
  
