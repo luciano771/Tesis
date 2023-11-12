@@ -78,7 +78,8 @@ class usuariosModel {
             $enviado = mail($para, $titulo, $mensaje, $cabeceras);
     
             if ($enviado) {
-                echo 'Correo enviado a: ' . $email['email'] . '<br>';
+                echo 'Correo enviado a: ' . $email['email'];
+                echo '<br>';
             } else {
                 echo 'Error al enviar correo a: ' . $email['email'] . '<br>';
             }

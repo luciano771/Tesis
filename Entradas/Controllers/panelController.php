@@ -111,7 +111,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $titulo = $oferta['titulo'];
             $mensaje = $oferta['mensaje'];
             $instancia2->campaña($titulo,$mensaje);
- 
         }
         
         $respuesta = ['mensaje' => $mensaje];
