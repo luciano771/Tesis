@@ -13,7 +13,7 @@ $instancia3 = new pedidoModel($db);
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
      
     if (isset($_GET['consultarArticulos']) && $_GET['consultarArticulos'] == 'true') {
-        $instancia->ObtenerEventos();
+        $instancia->ObtenerArticulos();
     } 
 
 }
@@ -49,8 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $instancia2->setNombre( $respuesta['name']);
         $instancia2->setEmail( $respuesta['email']);
         
-
-
         $instancia3->setCarrito($respuesta['carrito']);
         
         foreach ($respuesta['carrito'] as $item) {
@@ -65,21 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
         }
-
-
-
-
-        // if($instancia3->ProcesarPedido()){
-        //     $instancia2->InsertarUsuario();
-        //     $instancia3->InsertarPedido();
-        // }
-
-         
-        
-        
+ 
         echo json_encode($respuesta);
     } else {
-        // Manejar caso de datos no recibidos
         echo json_encode(array('mensaje' => 'Error al recibir datos'));
     }
 }
@@ -90,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 unset($db);
 unset($instancia);
 unset($instancia2);
+unset($instancia3);
+
  
 
 ?>

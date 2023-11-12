@@ -60,9 +60,11 @@
                             <label for="file">Imagen:</label>
                             <input type="hidden" id="img"></label>
                             <input type="file" class="form-control-file" id="file" name="file">
+                            <img id="imagenPrevia" style="max-width: 300px; display: none;" alt="Vista previa de la imagen">
+
                         </div>           
                         <input type="hidden" name="accion" id="accion" value="agregar">
-                        <input type="hidden" name="pk_eventos" id="pk_eventos" value="">
+                        <input type="hidden" name="pk_articulos" id="pk_eventos" value="">
                         <button type="submit" id ="boton" class="btn btn-primary">Cargar Articulo</button>
                     </div>               
             </form>
@@ -88,7 +90,32 @@
 
 
 
-        <script>
+    <script>
+
+
+
+
+    function cargarImagen() {
+        const inputImagen = document.getElementById('file');
+        const imagenPrevia = document.getElementById('imagenPrevia');
+
+        // Verifica si se seleccionó un archivo
+        if (inputImagen.files && inputImagen.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Muestra la imagen previa
+                imagenPrevia.src = e.target.result;
+                imagenPrevia.style.display = 'block';
+            };
+
+            reader.readAsDataURL(inputImagen.files[0]);
+        }
+    }
+
+
+ 
+
             let Modificar = false;
             const eventosPorPagina = 5; // Número de eventos por página
             let paginaActual = 1;
@@ -216,7 +243,7 @@ async function mostrarEventosEnPagina() {
 
 
             function MandarGet(pkEventos, accion) {
-                const url = `../Controllers/panelController.php?accion=${accion}&pkEvento=${pkEventos}`;
+                const url = `../Controllers/panelController.php?accion=${accion}&pk_articulo=${pkEventos}`;
                 return fetch(url)
                 .then(response => {
                     if (!response.ok) {

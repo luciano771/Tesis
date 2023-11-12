@@ -67,7 +67,7 @@ class ArticulosModel
 
  
     
-    public function insertarEvento()
+    public function insertarArticulos()
     {
         try {
             $sql = "INSERT INTO articulos (titulo, descripcion, Precio, cantidad,img) VALUES (?, ?, ?, ?, ?)";
@@ -81,7 +81,7 @@ class ArticulosModel
     
      
  
-    public function ObtenerEventos(){
+    public function ObtenerArticulos(){
 
         try{
         $consulta = "SELECT * FROM articulos";
@@ -109,12 +109,12 @@ class ArticulosModel
 
 
 
-    public function ObtenerEventosPorId($pkevento){
+    public function ObtenerArticulosPorId($pk_articulos){
 
         try{
-        $consulta = "SELECT * FROM articulos where pk_articulos= :pkevento";
+        $consulta = "SELECT * FROM articulos where pk_articulos= :pk_articulos";
         $stmt = $this->db->prepare($consulta);
-        $stmt->bindParam(':pkevento', $pkevento, PDO::PARAM_INT); 
+        $stmt->bindParam(':pk_articulos', $pk_articulos, PDO::PARAM_INT); 
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         header('Content-Type: application/json');
@@ -124,22 +124,9 @@ class ArticulosModel
         }
     }   
 
-    public function Obtenerfecha($pkevento){
+ 
 
-        try{
-        $consulta = "SELECT fecha_inicio,fecha_fin FROM eventos where pk_eventos= :pkevento";
-        $stmt = $this->db->prepare($consulta);
-        $stmt->bindParam(':pkevento', $pkevento, PDO::PARAM_INT); 
-        $stmt->execute();
-        $resultados = $stmt->fetch();
-        return $resultados;
-        } catch (PDOException $e) {
-        echo 'Error: ' . $e->getMessage();
-        return null;
-        }
-    }  
-
-    public function ActualizarEvento($pkevento){
+    public function ActualizarArticulo($pk_articulo){
         try {
             $consulta =  "UPDATE articulos 
             SET 
@@ -153,10 +140,10 @@ class ArticulosModel
                 $consulta .= ", img = :img";
             }
     
-            $consulta .= " WHERE pk_articulos = :pkevento";
+            $consulta .= " WHERE pk_articulos = :pk_articulo";
     
             $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':pkevento', $pkevento, PDO::PARAM_INT); 
+            $stmt->bindParam(':pk_articulo', $pk_articulo, PDO::PARAM_INT); 
             $stmt->bindParam(':titulo', $this->titulo, PDO::PARAM_STR);
             $stmt->bindParam(':descripcion', $this->descripcion, PDO::PARAM_STR);
             $stmt->bindParam(':precio', $this->Precio, PDO::PARAM_STR);
@@ -178,13 +165,12 @@ class ArticulosModel
     }
     
     
-    public function BorrarEvento($pkeventos){
+    public function BorrarArticulo($pk_articulos){
         $bool = true;
-
         try {
-            $consulta = "SELECT img FROM articulos WHERE pk_articulos= :pkevento";
+            $consulta = "SELECT img FROM articulos WHERE pk_articulos= :pk_articulos";
             $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':pkevento', $pkeventos, PDO::PARAM_INT); 
+            $stmt->bindParam(':pk_articulos', $pk_articulos, PDO::PARAM_INT); 
             $stmt->execute();
             $rutaImagen = $stmt->fetch();
             $rutaArchivo = $rutaImagen['img'];
@@ -206,9 +192,9 @@ class ArticulosModel
 
 
         try {
-            $consulta = "DELETE FROM articulos where pk_articulos= :pkevento";
+            $consulta = "DELETE FROM articulos where pk_articulos= :pk_articulos";
             $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':pkevento', $pkeventos, PDO::PARAM_INT); 
+            $stmt->bindParam(':pk_articulos', $pk_articulos, PDO::PARAM_INT); 
             $stmt->execute();
         } catch (PDOException $e) {
             // En caso de error en la conexión o consulta
