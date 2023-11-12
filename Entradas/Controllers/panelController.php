@@ -108,8 +108,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         foreach ($ofertas as $oferta) {
             // Accede a los campos individuales del artículo
-            $titulo = $articulo['titulo'];
-            $mensaje = $articulo['mensaje'];
+            $titulo = $oferta['titulo'];
+            $mensaje = $oferta['mensaje'];
             $instancia2->campaña($titulo,$mensaje);
  
         }
