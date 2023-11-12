@@ -3,12 +3,13 @@ require '../vendor/autoload.php'; // Carga la biblioteca Spout
  
  
 include '../Models/ArticulosModel.php';
- 
+include '../Models/usuariosModel.php';
 
 
 
 $db = new conexion();
 $instancia = new ArticulosModel($db);
+$instancia2 = new usuariosModel($db);
  
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
@@ -98,7 +99,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $respuesta = ['mensaje' => 'Accion no valida'];
         echo json_encode($respuesta);
     }
- 
+    
+
+    if (isset($data['accion']) && $data['accion'] == 'ofertas'){
+        
+        $instancia2->campaña();
+        
+    }else{
+        $respuesta = ['mensaje' => 'Accion no valida'];
+        echo json_encode($respuesta);
+    }
+
+
+
 
 }
 

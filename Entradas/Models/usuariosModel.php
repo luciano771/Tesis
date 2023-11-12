@@ -48,15 +48,45 @@ class usuariosModel {
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             header('Content-Type: application/json');
             echo json_encode($resultados);
-
         } catch (PDOException $e) {
-
-            
             echo 'Error: ' . $e->getMessage();
         }
      
     }
 
+    public function ConsultarUsuarioMails(){
+
+        try{
+            $consulta = "SELECT DISTINCT(email) FROM usuarios";
+            $stmt = $this->db->query($consulta);
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return null;             
+        }
+     
+    }
+    public function campaña(){
+        $emails = $this->ConsultarUsuarioMails();
+        foreach ($emails as $email){
+            $para      =  $email['email'];
+            $titulo    = 'El título';
+            $mensaje   = 'Hola';
+            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
+                'Reply-To: webmaster@example.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+    
+            $enviado = mail($para, $titulo, $mensaje, $cabeceras);
+    
+            if ($enviado) {
+                echo 'Correo enviado a: ' . $email['email'] . '<br>';
+            } else {
+                echo 'Error al enviar correo a: ' . $email['email'] . '<br>';
+            }
+        }
+    }
+    
 
 
 
