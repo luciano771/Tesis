@@ -107,13 +107,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
         foreach ($ofertas as $oferta) {
-            // Accede a los campos individuales del artículo
             $titulo = $oferta['titulo'];
             $mensaje = $oferta['mensaje'];
             $instancia2->campaña($titulo,$mensaje);
         }
         
-        $respuesta = ['mensaje' => $mensaje];
+        $respuesta = ['mensaje' => $mensaje, 'titulo'=>$titulo];
         echo json_encode($respuesta);
 
     }else{
