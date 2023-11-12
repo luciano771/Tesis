@@ -73,8 +73,8 @@ class usuariosModel {
             $para      =  $email['email'];
             $titulo    = 'El título';
             $mensaje   = 'Hola';
-            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
-                'Reply-To: webmaster@example.com' . "\r\n" .
+            $cabeceras = 'From: Equipo7TesisEsba@example.com' . "\r\n" .
+                'Reply-To: pereyraluciano771@gmail.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
     
             $enviado = mail($para, $titulo, $mensaje, $cabeceras);
