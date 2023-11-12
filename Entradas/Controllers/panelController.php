@@ -104,7 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $instancia2->campaña($titulo,$mensaje);
         }
         
-        $respuesta = ['mensaje' => $mensaje, 'titulo'=>$titulo];
+        $respuesta = ['mensaje' => 'Correos enviados con exito'];
         echo json_encode($respuesta);
 
     } 

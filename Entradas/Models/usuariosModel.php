@@ -79,9 +79,8 @@ class usuariosModel {
     
             if ($enviado) {
                 echo 'Correo enviado a: ' . $email['email'];
-                echo '<br>';
             } else {
-                echo 'Error al enviar correo a: ' . $email['email'] . '<br>';
+                echo 'Error al enviar correo a: ' . $email['email'];
             }
         }
     }
