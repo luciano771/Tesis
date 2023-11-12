@@ -103,8 +103,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if (isset($data['accion']) && $data['accion'] == 'ofertas'){
         
-        $instancia2->campaña();
-        
+        $ofertas = $data['ofertas'];
+
+
+        foreach ($ofertas as $oferta) {
+            // Accede a los campos individuales del artículo
+            $titulo = $articulo['titulo'];
+            $mensaje = $articulo['mensaje'];
+            $instancia2->campaña($titulo,$mensaje);
+ 
+        }
+            
+
     }else{
         $respuesta = ['mensaje' => 'Accion no valida'];
         echo json_encode($respuesta);
