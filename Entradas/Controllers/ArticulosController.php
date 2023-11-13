@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         $instancia3->MailDeCompra();
+        $instancia3->MailDeCompraCliente();
         echo json_encode($respuesta);
     } else {
         echo json_encode(array('mensaje' => 'Error al recibir datos'));
