@@ -234,16 +234,21 @@ class pedidoModel {
             if ($resultados) {
                 // Procesar los resultados y construir el contenido del correo
                 $contenidoCorreo = "Detalles de la compra:\n";
-                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n";            
+                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n";     
+                $TotalGeneral = 0;       
                 foreach ($resultados as $resultado) {
                     $contenidoCorreo .= "Fecha: " . $resultado['fecha'] . "\n";
                     $contenidoCorreo .= "Producto: " . $resultado['titulo'] . "\n";
                     // Agregar más detalles según sea necesario
                     // ...
+                    $contenidoCorreo .= "Unidades: " . $resultado['cantidad'] . "\n\n";
                     $contenidoCorreo .= "Total: " . $resultado['total'] . "\n\n";
-                    $contenidoCorreo .= "Detalles de Transferencia:". "\n\n"."CBU:017020466000000878652".  "\n\n"."ALIAS:peumayen.mp"."\n\n"."CUIL:20-45856987-8"."\n\n";
-                    $contenidoCorreo .= "Contacto: 1154458569";
+                    $TotalGeneral += $resultado['total'];
                 }
+
+                $contenidoCorreo .= "Total: " . $TotalGeneral . "\n\n";
+                $contenidoCorreo .= "Detalles de Transferencia:". "\n\n"."CBU:017020466000000878652".  "\n\n"."ALIAS:peumayen.mp"."\n\n"."CUIL:20-45856987-8"."\n\n";
+                $contenidoCorreo .= "Contacto: 1154458569";
     
                 // Configurar los encabezados del correo
                 $para = $resultados[0]['email'];  // Cambiar al correo del administrador
