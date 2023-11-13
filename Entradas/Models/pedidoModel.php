@@ -186,14 +186,15 @@ class pedidoModel {
                     $contenidoCorreo .= "Producto: " . $resultado['titulo'] . "\n";
                     // Agregar más detalles según sea necesario
                     // ...
+                    $contenidoCorreo .= "Unidades: " . $resultado['cantidad'] . "\n\n";
                     $contenidoCorreo .= "Total: " . $resultado['total'] . "\n\n";
                 }
     
                 // Configurar los encabezados del correo
                 $para = 'pereyraluciano771@gmail.com';  // Cambiar al correo del administrador
                 $titulo = 'Compra realizada por un usuario';
-                $cabeceras = 'From: tu_correo@example.com' . "\r\n" .
-                             'Reply-To: tu_correo@example.com' . "\r\n" .
+                $cabeceras = 'From: Peumayen@gmail.com' . "\r\n" .
+                             'Reply-To: Peumayen2@gmail.com' . "\r\n" .
                              'X-Mailer: PHP/' . phpversion();
     
                 // Enviar el correo al administrador
@@ -247,8 +248,8 @@ class pedidoModel {
                 // Configurar los encabezados del correo
                 $para = $resultados[0]['email'];  // Cambiar al correo del administrador
                 $titulo = 'Detalle de compra';
-                $cabeceras = 'From: tu_correo@example.com' . "\r\n" .
-                             'Reply-To: tu_correo@example.com' . "\r\n" .
+                $cabeceras = 'From: Peumayen@gmail.com' . "\r\n" .
+                             'Reply-To: Peumayen2@gmail.com' . "\r\n" .
                              'X-Mailer: PHP/' . phpversion();
     
                 // Enviar el correo al administrador
