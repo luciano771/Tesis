@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "No hay suficiente stock para el artículo con ID: " . $item['pk_articulo'];
                 return false;
             }
-
         }
+        $instancia3->MailDeCompra();
         echo json_encode($respuesta);
     } else {
         echo json_encode(array('mensaje' => 'Error al recibir datos'));

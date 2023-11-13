@@ -89,11 +89,7 @@ class pedidoModel {
             } catch (PDOException $e) {
                 echo "Error al insertar el articulo: " . $e->getMessage();
             }
-
-        }
-
-
-        
+        }        
     }
 
 
@@ -106,7 +102,6 @@ class pedidoModel {
                 echo "No hay suficiente stock para el artículo con ID: " . $item['pk_articulo'];
                 return false;
             }
-
         }
     }
 
@@ -169,8 +164,55 @@ class pedidoModel {
         }
     }
 
-
-
+    
+    public function MailDeCompra(){
+        $pk_usuario = $this->ultimaPk_usuarios();
+        try {
+            // Seleccionar información necesaria de la base de datos
+            $sql = "SELECT u.nombreapellido, u.email, p.fecha, p.total, p.cantidad, a.titulo FROM pedidos p, usuarios u, articulos a WHERE p.fk_usuario = u.pk_usuario AND a.pk_articulos = p.fk_articulos AND pk_usuario = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$pk_usuario]);
+            
+            // Obtener los resultados
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Verificar si hay resultados antes de enviar el correo
+            if ($resultados) {
+                // Procesar los resultados y construir el contenido del correo
+                $contenidoCorreo = "Detalles de la compra realizada por el usuario:\n";
+                foreach ($resultados as $resultado) {
+                    $contenidoCorreo .= "Fecha: " . $resultado['fecha'] . "\n";
+                    $contenidoCorreo .= "Producto: " . $resultado['titulo'] . "\n";
+                    // Agregar más detalles según sea necesario
+                    // ...
+                    $contenidoCorreo .= "Total: " . $resultado['total'] . "\n\n";
+                }
+    
+                // Configurar los encabezados del correo
+                $para = 'pereyraluciano771@gmail.com';  // Cambiar al correo del administrador
+                $titulo = 'Compra realizada por un usuario';
+                $cabeceras = 'From: tu_correo@example.com' . "\r\n" .
+                             'Reply-To: tu_correo@example.com' . "\r\n" .
+                             'X-Mailer: PHP/' . phpversion();
+    
+                // Enviar el correo al administrador
+                $enviado = mail($para, $titulo, $contenidoCorreo, $cabeceras);
+    
+                // Verificar si el correo se envió correctamente
+                if ($enviado) {
+                    echo "Correo enviado exitosamente al administrador";
+                } else {
+                    echo "Error al enviar el correo al administrador";
+                }
+            } else {
+                echo "No se encontraron resultados para el usuario con ID: " . $pk_usuario;
+            }
+    
+        } catch (PDOException $e) {
+            echo "Error al obtener detalles de compra: " . $e->getMessage();
+        }
+    }
+    
 
 
 
