@@ -180,6 +180,7 @@ class pedidoModel {
             if ($resultados) {
                 // Procesar los resultados y construir el contenido del correo
                 $contenidoCorreo = "Detalles de la compra realizada por el usuario:\n";
+                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n";            
                 foreach ($resultados as $resultado) {
                     $contenidoCorreo .= "Fecha: " . $resultado['fecha'] . "\n";
                     $contenidoCorreo .= "Producto: " . $resultado['titulo'] . "\n";
