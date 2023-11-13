@@ -180,7 +180,7 @@ class pedidoModel {
             if ($resultados) {
                 // Procesar los resultados y construir el contenido del correo
                 $contenidoCorreo = "Detalles de la compra realizada por el usuario:\n";
-                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n";            
+                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n\n";            
                 foreach ($resultados as $resultado) {
                     $contenidoCorreo .= "Fecha: " . $resultado['fecha'] . "\n";
                     $contenidoCorreo .= "Producto: " . $resultado['titulo'] . "\n";
@@ -192,7 +192,7 @@ class pedidoModel {
     
                 // Configurar los encabezados del correo
                 $para = 'pereyraluciano771@gmail.com';  // Cambiar al correo del administrador
-                $titulo = 'Compra realizada por un usuario';
+                $titulo = 'Se registro una nueva compra';
                 $cabeceras = 'From: Peumayen@gmail.com' . "\r\n" .
                              'Reply-To: Peumayen2@gmail.com' . "\r\n" .
                              'X-Mailer: PHP/' . phpversion();
@@ -234,7 +234,7 @@ class pedidoModel {
             if ($resultados) {
                 // Procesar los resultados y construir el contenido del correo
                 $contenidoCorreo = "Detalles de la compra:\n";
-                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n";     
+                $contenidoCorreo .= "Nombre del Usuario: " . $resultados[0]['nombreapellido'] . "\n\n";     
                 $TotalGeneral = 0;       
                 foreach ($resultados as $resultado) {
                     $contenidoCorreo .= "Fecha: " . $resultado['fecha'] . "\n";
