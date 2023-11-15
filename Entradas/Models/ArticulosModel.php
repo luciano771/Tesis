@@ -8,7 +8,6 @@ class ArticulosModel
     private $descripcion;
     private $Precio;
     private $cantidad;
- 
     private $img;
 
     public function __construct($db) {
@@ -144,71 +143,12 @@ class ArticulosModel
 
  
 
-    public function ActualizarArticulo($pk_articulo){
-        try {
-            $consulta =  "UPDATE articulos 
-            SET 
-                titulo = :titulo, 
-                descripcion = :descripcion, 
-                Precio = :precio, 
-                cantidad = :cantidad";
     
-            // Verificar si img no es null antes de incluirlo en la consulta
-            if ($this->img !== null) {
-                $consulta .= ", img = :img";
-            }
-    
-            $consulta .= " WHERE pk_articulos = :pk_articulo";
-    
-            $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':pk_articulo', $pk_articulo, PDO::PARAM_INT); 
-            $stmt->bindParam(':titulo', $this->titulo, PDO::PARAM_STR);
-            $stmt->bindParam(':descripcion', $this->descripcion, PDO::PARAM_STR);
-            $stmt->bindParam(':precio', $this->Precio, PDO::PARAM_STR);
-            $stmt->bindParam(':cantidad', $this->cantidad, PDO::PARAM_STR);
-    
-            // Verificar si img no es null antes de ejecutar la consulta
-            if ($this->img !== null) {
-                $stmt->bindParam(':img', $this->img, PDO::PARAM_STR);
-            }
-    
-            if ($stmt->execute()) {
-                echo "articulo actualizado correctamente";
-            } else {
-                echo "Error al actualizar el articulo: " . $stmt->errorInfo()[2];
-            }
-        } catch (PDOException $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
-    }
     
     
     public function BorrarArticulo($pk_articulos){
-        $bool = true;
-        try {
-            $consulta = "SELECT img FROM articulos WHERE pk_articulos= :pk_articulos";
-            $stmt = $this->db->prepare($consulta);
-            $stmt->bindParam(':pk_articulos', $pk_articulos, PDO::PARAM_INT); 
-            $stmt->execute();
-            $rutaImagen = $stmt->fetch();
-            $rutaArchivo = $rutaImagen['img'];
-            
-            if (unlink($rutaArchivo)) {
-                echo 'El archivo ha sido eliminado exitosamente.';
-            } else {
-                echo 'No se pudo eliminar el archivo.';
-            }
-             
-        } catch (PDOException $e) {
-            // En caso de error en la conexión o consulta
-            echo 'Error: ' . $e->getMessage();
-            $bool = false;
-        }
-
         
-
-
-
+         
         try {
             $consulta = "DELETE FROM articulos where pk_articulos= :pk_articulos";
             $stmt = $this->db->prepare($consulta);
@@ -219,10 +159,58 @@ class ArticulosModel
             echo 'Error: ' . $e->getMessage();
             $bool = false;
         }
-
-        return $bool;
+ 
     }
 
+
+
+    
+    public function ActualizarArticulo($pk_articulo) {
+        try {
+            $consulta =  "UPDATE articulos 
+                          SET 
+                              titulo = :titulo, 
+                              descripcion = :descripcion, 
+                              Precio = :precio, 
+                              cantidad = :cantidad";
+    
+            // Verificar si img no es null antes de incluirlo en la consulta
+            if (!empty($this->img)) {
+                $consulta .= ", img = :img";
+            }
+    
+            $consulta .= " WHERE pk_articulos = :pk_articulo";
+    
+            // Assuming $conexion is your database connection
+            $stmt = $this->db->prepare($consulta);
+    
+            // Bind parameters
+            $stmt->bindParam(':titulo', $this->titulo);
+            $stmt->bindParam(':descripcion', $this->descripcion);
+            $stmt->bindParam(':precio', $this->Precio);
+            $stmt->bindParam(':cantidad', $this->cantidad);
+            $stmt->bindParam(':pk_articulo', $pk_articulo);
+    
+            // Bind image if not empty
+            if (!empty($this->img)) {
+                $stmt->bindParam(':img', $this->img);
+            }
+    
+            // Execute the query
+            $stmt->execute();
+            echo 'se pudo';
+            // Rest of your code handling success or errors
+        } catch (PDOException $e) {
+            echo 'nose pudo';
+        }
+    }
+    
+
+
+
+
+    
+    
 
 
     

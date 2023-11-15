@@ -56,13 +56,10 @@
                             <label for="Cantidad" class="form-label">Cantidad:</label>
                             <input type="text" class="form-control" id="Cantidad" name="Cantidad" required>
                         </div>
-                        <div class="form-group">
-                            <label for="file">Imagen:</label>
-                            <input type="hidden" id="img"></label>
-                            <input type="file" class="form-control-file" id="file" name="file">
-                            <img id="imagenPrevia" style="max-width: 300px; display: none;" alt="Vista previa de la imagen">
-
-                        </div>           
+                        <div class="mb-3">
+                            <label for="Cantidad" class="form-label">Url Imagen:</label>
+                            <input type="text" class="form-control" id="Cantidad" name="img" required>
+                        </div>        
                         <input type="hidden" name="accion" id="accion" value="agregar">
                         <input type="hidden" name="pk_articulos" id="pk_eventos" value="">
                         <button type="submit" id ="boton" class="btn btn-primary">Cargar Articulo</button>
@@ -74,7 +71,22 @@
             <div class="paginacion">
                     <button id="btnAnterior" class="btn btn-primary boton">Anterior</button>
                     <button id="btnSiguiente" class="btn btn-primary boton">Siguiente</button>
-            </div>      
+            </div>  
+            <div class="ofertas">
+            <form   action="../Controllers/ofertasController.php" method="POST"  enctype="multipart/form-data">
+                    <div class="contenedor" id="contenedor"> 
+                        <div class="mb-3">
+                            <label for="Titulo" class="form-label">Titulo:</label>
+                            <input type="text" class="form-control" id="Titulo" name="Titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Descripcion" class="form-label">Descripcion:</label>
+                            <input type="text" class="form-control" id="Descripcion" name="Descripcion" required>
+                        </div>   
+                        <button type="submit" id ="boton" class="btn btn-primary">Generar Campaña</button>
+                    </div>               
+            </form>
+            </div>     
     </div>
 
 

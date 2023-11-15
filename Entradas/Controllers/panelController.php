@@ -1,5 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Credentials: true");
 
 require '../vendor/autoload.php'; // Carga la biblioteca Spout
 include '../Models/ArticulosModel.php';
@@ -11,108 +14,78 @@ $db = new conexion();
 $instancia = new ArticulosModel($db);
 $instancia2 = new usuariosModel($db);
  
+
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    
-    $json_data = file_get_contents('php://input');
-    $data = json_decode($json_data, true);
 
+    if (isset($_POST['Titulo']) && isset($_POST['img']) && isset($_POST['Descripcion']) && isset($_POST['Cantidad']) && isset($_POST['Precio'])  && isset($_POST['accion']) && $_POST['accion']==='agregar') {
+        
+        $Titulo= $_POST['Titulo'] ?? '';
+        $Descripcion= $_POST['Descripcion'] ?? '';
+        $Precio = $_POST['Precio'] ?? '';
+        $Cantidad = $_POST['Cantidad'] ?? '';
+        $img = $_POST['img'] ?? '';
  
-    if (isset($data['accion']) && $data['accion'] == 'agregar') {
-        // Accede a la lista de artículos
-        $articulos = $data['articulos'];
-
-
-        foreach ($articulos as $articulo) {
-            // Accede a los campos individuales del artículo
-            $nombre = $articulo['nombre'];
-            $descripcion = $articulo['descripcion'];
-            $precio = $articulo['precio'];
-            $cantidad = $articulo['cantidad'];
-            $imagen = $articulo['imagen'];
-
 
             try {
-                $instancia->setTitulo($nombre);
-                $instancia->setDescripcion($descripcion);
-                $instancia->setPrecio($precio);
-                $instancia->setCantidad($cantidad);
-                $instancia->setImg('../imagenes/' . $imagen);
+                $instancia->setTitulo($Titulo);
+                $instancia->setDescripcion($Descripcion);
+                $instancia->setCantidad($Cantidad);
+                $instancia->setPrecio($Precio);
+                $instancia->setImg($img);
                 $instancia->insertarArticulos();
+
             } catch (PDOException $e) {
                 echo "Error al insertar el evento: " . $e->getMessage();
             }
-        }
-        $respuesta = ['mensaje' => 'Articulos agregados con exito'];
-        echo json_encode($respuesta);
-    }  
 
-
-
-
-    if (isset($data['accion']) && $data['accion'] == 'actualizar') {
+          
+       
  
-        $articulos = $data['articulos'];
+
+        echo '<script>
+        //alert("Se ha cargado el evento con éxito.");
+        window.location.href = "../Views/panel.php"; // Redirige a panel.php
+        </script>';
 
 
-        foreach ($articulos as $articulo) {
-    
-            $pk_articulo = $articulo['pk_articulo'];
-            $nombre = $articulo['nombre'];
-            $descripcion = $articulo['descripcion'];
-            $precio = $articulo['precio'];
-            $cantidad = $articulo['cantidad'];
-
-            $imagen = isset($articulo['imagen']) ? $articulo['imagen'] : null;
-
-            if($imagen !=null || $imagen!= ''){
-
-                try {
-                    $instancia->setTitulo($nombre);
-                    $instancia->setDescripcion($descripcion);
-                    $instancia->setPrecio($precio);
-                    $instancia->setCantidad($cantidad);
-                    $instancia->setImg('../imagenes/' . $imagen);
-                    $instancia->ActualizarArticulo($pk_articulo);
-                } catch (PDOException $e) {
-                    echo "Error al insertar el evento: " . $e->getMessage();
-                }
-            }else{
-                try {
-                    $instancia->setTitulo($nombre);
-                    $instancia->setDescripcion($descripcion);
-                    $instancia->setPrecio($precio);
-                    $instancia->setCantidad($cantidad);
-                    $instancia->ActualizarArticulo($pk_articulo);
-                } catch (PDOException $e) {
-                    echo "Error al insertar el evento: " . $e->getMessage();
-                }
-            }
-        }
-        $respuesta = ['mensaje' => 'Articulos actualizada con exito'];
-        echo json_encode($respuesta);
-    }  
-    
-
-    if (isset($data['accion']) && $data['accion'] == 'ofertas'){
-        
-        $ofertas = $data['ofertas'];
-
-
-        foreach ($ofertas as $oferta) {
-            $titulo = $oferta['titulo'];
-            $mensaje = $oferta['mensaje'];
-            $instancia2->campaña($titulo,$mensaje);
-        }
-        
-        $respuesta = ['mensaje' => 'Correos enviados con exito'];
-        echo json_encode($respuesta);
 
     } 
+
+
+
+    
+   if (isset($_POST['Titulo'], $_POST['img'], $_POST['Descripcion'], $_POST['Cantidad'], $_POST['Precio'], $_POST['accion']) && $_POST['accion'] === 'actualizar') {
+    $TituloAc = $_POST['Titulo'] ?? '';
+    $DescripcionAc = $_POST['Descripcion'] ?? '';
+    $PrecioAc = $_POST['Precio'] ?? '';
+    $CantidadAc = $_POST['Cantidad'] ?? '';
+    $img = $_POST['img'] ?? '';
+    $pk_eventos = $_POST['pk_articulos'] ?? '';
+    
+    echo $pk_eventos;
+
+    try {
+        $instancia->setTitulo($TituloAc);
+        $instancia->setDescripcion($DescripcionAc);
+        $instancia->setCantidad($CantidadAc);
+        $instancia->setPrecio($PrecioAc);
+        $instancia->setImg($img);
+        $instancia->ActualizarArticulo($pk_eventos);
+
+        // Posiblemente redirigir a una página de éxito después de la actualización
+        echo '<script>window.location.href = "../Views/panel.php";</script>';
+    } catch (PDOException $e) {
+        echo "Error al actualizar el artículo: " . $e->getMessage();
+    }
 }
 
- 
-  
-   
+    
+
+
+
+}
+
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(isset($_GET["TraerEventos"]) && $_GET["TraerEventos"]=="true"){

@@ -34,7 +34,7 @@ class usuariosModel {
             $sql = "INSERT INTO usuarios (email, nombreapellido) VALUES (?, ?)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$this->email, $this->nombre]);
-            echo "usuario insertados";
+            // echo "usuario insertados";
         } catch (PDOException $e) {
             echo "Error al insertar el evento: " . $e->getMessage();
         }
