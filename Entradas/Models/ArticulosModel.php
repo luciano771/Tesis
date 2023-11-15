@@ -1,6 +1,5 @@
 <?php
-require_once 'Conexion.php'; 
-
+ 
 class ArticulosModel  
 {   
     private $db;

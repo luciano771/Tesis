@@ -1,7 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+
 require '../vendor/autoload.php'; // Carga la biblioteca Spout
- 
- 
 include '../Models/ArticulosModel.php';
 include '../Models/usuariosModel.php';
 
