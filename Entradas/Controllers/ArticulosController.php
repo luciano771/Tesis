@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['consultarArticulos']) && $_GET['consultarArticulos'] == 'true') {
         $instancia->ObtenerArticulos();
     } 
+    if (isset($_GET['filtro'])) {
+        $descripcion = $_GET['filtro'];
+        $instancia->ObtenerArticulosDescripcion($descripcion);
+    } 
 
 }
  

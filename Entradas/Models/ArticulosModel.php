@@ -94,6 +94,25 @@ class ArticulosModel
         }
     }   
 
+    public function ObtenerArticulosDescripcion($descripcion){
+
+        try{
+        $consulta = "SELECT * FROM articulos WHERE descripcion LIKE :descripcion";
+        $stmt = $this->db->prepare($consulta);
+        $descripcionParam = '%' . $descripcion . '%'; // Adding wildcards here
+        $stmt->bindParam(':descripcion', $descripcionParam, PDO::PARAM_STR); 
+        $stmt->execute();
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if($resultados ==null or $resultados == ""){
+            $resultados = "No se encuentra el producto que busca, pruebe con otra palabra.";
+        }
+        header('Content-Type: application/json');
+        echo json_encode($resultados);
+        } catch (PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+        }
+    }   
+
     public function FinalizarCompra(){
 
         try{
