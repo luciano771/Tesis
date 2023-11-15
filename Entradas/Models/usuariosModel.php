@@ -71,8 +71,8 @@ class usuariosModel {
         $emails = $this->ConsultarUsuarioMails();
         foreach ($emails as $email){
             $para      =  $email['email'];
-            $cabeceras = 'From: Equipo7Esba@example.com' . "\r\n" .
-                'Reply-To: Equipo7Esba@example.com' . "\r\n" .
+            $cabeceras = 'From: Peumayen@gmail.com' . "\r\n" .
+                'Reply-To: Peumayen2@gmail.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
     
             $enviado = mail($para, $titulo, $mensaje, $cabeceras);
